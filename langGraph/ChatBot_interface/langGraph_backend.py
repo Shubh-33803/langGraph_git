@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph,START,END
 from typing import TypedDict,Annotated
 from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_core.messages import BaseMessage
+from langchain_core.messages import BaseMessage,HumanMessage
 from langgraph.graph.message import add_messages
 from langgraph.checkpoint.memory import InMemorySaver
 
@@ -30,4 +30,14 @@ graph.add_edge("chat_node",END)
 checkpointer = InMemorySaver()
 
 chatBot = graph.compile(checkpointer=checkpointer)
+
+# for message_chunk,metadate in chatBot.stream(
+#     {"message":HumanMessage(content="what is the recipe to make pasta")},
+#     {"configurable":{"thread_id":"1"}},
+#     stream_mode="messages"
+# ):
+#     if message_chunk.content:
+#         print(message_chunk.content,end=" ",flush=True)
+
+
 
